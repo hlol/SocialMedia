@@ -22,9 +22,12 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent" />
        </FrameLayout>
-       <EditText
-           android:layout_width="match_parent"
-           android:layout_height="match_parent" />
    </RelativeLayout>
-
+    <android.support.design.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:layout_marginBottom="3dp"
+        app:menu="@menu/navigation_menu"
+        ></android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
