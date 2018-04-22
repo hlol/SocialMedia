@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "626827658506",
+    "firebase_url": "https://socialmedia-d0306.firebaseio.com",
+    "project_id": "socialmedia-d0306",
+    "storage_bucket": "socialmedia-d0306.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626827658506:android:c82c054fef4c3471",
+        "android_client_info": {
+          "package_name": "com.android.epi.edu.socialmedia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626827658506-h80nflab88dug4ljhe3s33v42tisuon5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.android.epi.edu.socialmedia",
+            "certificate_hash": "3e56a1fb82340a0365332c1202d91aa8f2282b8c"
+          }
+        },
+        {
+          "client_id": "626827658506-e1ff8p0q3llhfvajllqpfr7kuajm58ev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0FzVODqFqMea1ornv6RcT0_N2uuGIBW8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626827658506-e1ff8p0q3llhfvajllqpfr7kuajm58ev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
