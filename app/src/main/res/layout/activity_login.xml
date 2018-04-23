@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity"
     android:background="@drawable/login">
+
     <ImageView
         android:id="@+id/login_icon"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
@@ -44,14 +45,57 @@
         />
 
     <Button
-        android:id="@+id/login_create_account"
+        android:id="@+id/login_button"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="200dp"
+        android:layout_marginBottom="178dp"
         android:background="@drawable/button"
         android:padding="15dp"
         android:text="LOGIN"
-        android:textColor="@color/cast_expanded_controller_text_color" />
+        android:textColor="@color/cast_expanded_controller_text_color"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:text="Don't have an Account,Need new Account"
+        android:textAlignment="center"
+        android:textColor="@android:color/background_light"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="122dp"
+        android:text="or Login with"
+        android:textColor="@android:color/holo_red_light"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/facebook" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:src="@drawable/google" />
+    </LinearLayout>
 </RelativeLayout>
