@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClickPostActivity"
+    android:background="@drawable/register">
+
+    <ImageView
+        android:id="@+id/click_post_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="19dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/select_image" />
+
+    <TextView
+        android:id="@+id/click_post_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/click_post_image"
+        android:padding="13dp"
+        android:text="Post description"
+        android:textColor="@color/cast_expanded_controller_background_color"
+        android:textSize="16sp"
+        android:background="@drawable/inputs"/>
+
+    <Button
+        android:id="@+id/edit_post_button"
+        android:layout_width="189dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/button"
+        android:text="Edit post"
+        android:textColor="@color/cast_expanded_controller_text_color"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/delete_post_buttn"
+        android:layout_width="189dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_post_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-61dp"
+        android:background="@drawable/button"
+        android:text="Delete post"
+        android:textColor="@color/cast_expanded_controller_text_color"
+        android:textStyle="bold" />
+</RelativeLayout>

@@ -55,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null )
+        if(currentUser != null )
         {
             SendUserToMainActivity();
         }
@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         else {
             loadingBar.setTitle("Login");
-            loadingBar.setMessage("Please wait ,while we are allowing your to Login into your account...");
+            loadingBar.setMessage("Please wait ,while we are allowing you to Login into your account...");
             loadingBar.show();
             loadingBar.setCanceledOnTouchOutside(true);
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

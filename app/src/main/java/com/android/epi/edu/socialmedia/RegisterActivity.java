@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         CreateAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateAccountButton();
+                CreateNewAccount();
             }
         });
 
@@ -46,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser == null )
+        if(currentUser != null )
         {
             SendUserToMainActivity();
         }
@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         finish();
     }
 
-    private void CreateAccountButton() {
+    private void CreateNewAccount() {
 
         String email = UserEmail.getText().toString();
         String password = UserConfirmPassword.getText().toString();
