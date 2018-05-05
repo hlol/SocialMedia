@@ -1,6 +1,8 @@
 package com.android.epi.edu.socialmedia;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +21,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -34,6 +41,9 @@ public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference SettingsuserRef;
     private FirebaseAuth mAuth;
     private String currentUserID;
+    final static int Gallery_Pick = 1;
+    private ProgressDialog loadingBar;
+    private StorageReference UserProfileImageRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +51,16 @@ public class SettingsActivity extends AppCompatActivity {
         mAuth=FirebaseAuth.getInstance();
         currentUserID =mAuth.getCurrentUser().getUid();
         SettingsuserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserID);
+        UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile images");
 
-
+        loadingBar = new ProgressDialog(this);
         mToolbar = (Toolbar)  findViewById(R.id.settings_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Account settings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userName = (EditText) findViewById(R.id.settings_username);
-        userProfName = (EditText) findViewById(R.id.setup_profile_image);
+        userProfName = (EditText) findViewById(R.id.settings_profile_full_name);
         userStatus = (EditText) findViewById(R.id.settings_status);
         userCountry = (EditText) findViewById(R.id.settings_country);
         userGender = (EditText) findViewById(R.id.settings_gender);
@@ -98,7 +109,87 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        userProfImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent galleryIntent = new Intent();
+                galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
+                galleryIntent.setType("image/*");
+                startActivityForResult(galleryIntent,Gallery_Pick);
+            }
+        });
+
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Gallery_Pick && resultCode == RESULT_OK && data != null )
+        {
+            Uri ImageUri = data.getData();
+            CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1,1)
+                    .start(this);
+        }
+
+        if( requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
+        {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK)
+            {
+                loadingBar.setTitle("Profile Image");
+                loadingBar.setMessage("Please wait, while we updating your profile image...");
+                loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.show();
+
+                Uri resultUri = result.getUri();
+                StorageReference filePath = UserProfileImageRef.child(currentUserID + ".jpg");
+
+                filePath.putFile(resultUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<UploadTask.TaskSnapshot> task)
+                    {
+                        if(task.isSuccessful())
+                        {
+                            Toast.makeText(SettingsActivity.this, "Profile Image stored successfully to Firebase storage...", Toast.LENGTH_SHORT).show();
+
+                            final String downloadUrl = task.getResult().getDownloadUrl().toString();
+
+                            SettingsuserRef.child("profileimage").setValue(downloadUrl)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task)
+                                        {
+                                            if(task.isSuccessful())
+                                            {
+                                                Intent selfIntent = new Intent(SettingsActivity.this, SettingsActivity.class);
+                                                startActivity(selfIntent);
+
+                                                Toast.makeText(SettingsActivity.this, "Profile Image stored to Firebase Database Successfully...", Toast.LENGTH_SHORT).show();
+                                                loadingBar.dismiss();
+                                            }
+                                            else
+                                            {
+                                                String message = task.getException().getMessage();
+                                                Toast.makeText(SettingsActivity.this, "Error Occured: " + message, Toast.LENGTH_SHORT).show();
+                                                loadingBar.dismiss();
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+            }
+            else
+            {
+                Toast.makeText(this, "Error Occured: Image can not be cropped. Try Again.", Toast.LENGTH_SHORT).show();
+                loadingBar.dismiss();
+            }
+        }
+
+    }
+
 
     private void ValidateAccountInfo()
     {
@@ -141,6 +232,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
         else
         {
+            loadingBar.setTitle("Profile Image");
+            loadingBar.setMessage("Please wait, while we updating your profile image...");
+            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.show();
             UpdateAccountInfo(username,profilename,status,dob,country,gender,relation);
         }
     }
@@ -164,11 +259,11 @@ public class SettingsActivity extends AppCompatActivity {
                 {
                     SendUserToMainActivity();
                     Toast.makeText(SettingsActivity.this,"Account Settings Updated Successfully..",Toast.LENGTH_SHORT).show();
-
+                    loadingBar.dismiss();
                 }
                 else{
                     Toast.makeText(SettingsActivity.this,"Error Occured!!",Toast.LENGTH_SHORT).show();
-
+                    loadingBar.dismiss();
                 }
 
             }

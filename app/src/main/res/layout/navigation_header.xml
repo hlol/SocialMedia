@@ -26,6 +26,7 @@
         android:layout_marginBottom="11dp"
         android:text="Username"
         android:textAlignment="center"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

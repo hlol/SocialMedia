@@ -231,11 +231,10 @@ public class MainActivity extends AppCompatActivity {
                 SendUserToPostActivity();
                 break;
             case R.id.nav_profile:
-                Toast.makeText(this,"profile",Toast.LENGTH_SHORT).show();
+                SendUserToProfileActivity();
                 break;
             case R.id.nav_home:
-                Toast.makeText(this,"home",Toast.LENGTH_SHORT).show();
-                break;
+                SendUserToMainActivity();                break;
             case R.id.nav_friends:
                 Toast.makeText(this,"friend list",Toast.LENGTH_SHORT).show();
                 break;
@@ -255,9 +254,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void SendUserToMainActivity() {
+        Intent mainIntent = new Intent (MainActivity.this,MainActivity.class);
+        startActivity(mainIntent);
+    }
+
     private void SendUserToSettingsActivity() {
         Intent settingsIntent = new Intent (MainActivity.this,SettingsActivity.class);
         startActivity(settingsIntent);
+
+    }
+    private void SendUserToProfileActivity() {
+        Intent profileIntent = new Intent (MainActivity.this,ProfileActivity.class);
+        startActivity(profileIntent);
 
     }
 
